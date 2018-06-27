@@ -1,0 +1,32 @@
+.idea/cache
+.idea/caches
+.idea/dictionaries
+.idea/inspectionProfiles/
+.idea/libraries
+.idea/scopes
+.idea/compiler.xml
+.idea/encodings.xml
+.idea/gradle.xml
+.idea/kotlinc.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/runConfigurations.xml
+.idea/vcs.xml
+.idea/workspace.xml
+
+local.properties
+out
+bin
+.DS_Store
+app/build/
+.gradle/
+build/
+captures/
+
+*.iml
+*.apk
+
+# VIM temp files
+*.swp
+
+# Signing keystore files
