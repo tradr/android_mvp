@@ -3,6 +3,25 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+ext {
+    versionNameBase = "0.1"
+
+    env = [
+            testnet: [
+                    ambBaseUrl: 'https://gateway-test.ambrosus.com/'
+            ]
+    ]
+
+    flavors = [
+            playstore: [
+                    enableLogHttp: false,
+            ],
+            dev      : [
+                    enableLogHttp: true,
+            ]
+    ]
+}
+
 android {
     compileSdkVersion rootProject.compileSdkVersion
 
@@ -18,13 +37,35 @@ android {
         applicationId "com.tradr"
 
         versionCode 1
-        versionName "1.0"
+        versionName "0.1a"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
 
         proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    flavorDimensions "endpoint"
+
+    productFlavors {
+        flavors.each { name, config ->
+            "$name" {
+                buildConfigField "boolean", "ENABLE_LOG_HTTP", "${config.enableLogHttp} || DEBUG" // enabled for all debug builds
+            }
+
+            playstore {
+                dimension "endpoint"
+
+                buildConfigField "String", "AMB_BASE_URL", "\"${env.testnet.ambBaseUrl}\""
+            }
+
+            dev {
+                dimension "endpoint"
+
+                buildConfigField "String", "AMB_BASE_URL", "\"${env.testnet.ambBaseUrl}\""
+            }
+        }
     }
 
     buildTypes {
